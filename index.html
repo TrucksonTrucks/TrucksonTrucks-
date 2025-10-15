@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrucksonTrucks - Sell, Buy and Receive</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, black 0%, darkblue 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #222;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: sandybrown;
+      padding: 25px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: darkblue;
+      font-size: 1.8em;
+      margin-bottom: 5px;
+    }
+
+    .tagline {
+      color: #333;
+      font-size: 1.1em;
+      font-weight: 700;
+    }
+
+    .filters {
+      background: sandybrown;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    select, input {
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border 0.3s;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      border-color: darkblue;
+    }
+
+    .search-btn {
+      background: linear-gradient(135deg, black 0%, darkblue 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+      align-self: flex-end;
+    }
+
+    .search-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .truck-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+    }
+
+    .truck-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .truck-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .truck-image {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, black 0%, darkblue 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4em;
+      color: white;
+    }
+
+    .truck-info {
+      padding: 20px;
+    }
+
+    .truck-name {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: black;
+      margin-bottom: 8px;
+    }
+
+    .truck-details {
+      color: #666;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .truck-specs {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .spec-badge {
+      background: #f0f0f0;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      color: #555;
+    }
+
+    .truck-price {
+      font-size: 1.6em;
+      font-weight: 700;
+      color: darkblue;
+      margin-bottom: 15px;
+    }
+
+    .contact-btn {
+      width: 100%;
+      background: linear-gradient(135deg, black 0%, darkblue 100%);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .contact-btn:hover {
+      opacity: 0.9;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .status-available {
+      background: #d4edda;
+      color: black;
+    }
+
+    .status-sold {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>TRUCKS.ON.TRUCKS</h1>
+      <p class="tagline">Sell, Buy and Receive</p>
+    </header>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label for="brand">Brand</label>
+        <select id="brand">
+          <option value="">All Brands</option>
+          <option value="ford">Fioord</option>
+          <option value="chevrolet">Chevrolet</option>
+          <option value="ram">RAM</option>
+          <option value="gmc">GMC</option>
+          <option value="toyota">Toyota</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="year">Year</label>
+        <select id="year">
+          <option value="">Any Year</option>
+         <option value="2024">2024</option>
+         <option value="2023">2023</option>
+         <option value="2022">2022</option>
+        <option value="2021">2021</option>
+        <option value="2020">2020</option>
+        <option value="2019">2019</option>
+        <option value="2018">2018</option>
+        <option value="2017">2017</option>
+        <option value="2016">2016</option>
+        <option value="2015">2015</option>
+        <option value="2014">2014</option>
+        <option value="2013">2013</option>
+        <option value="2012">2012</option>
+        <option value="2011">2011</option>
+        <option value="2010">2010</option>
+        <option value="1972">1972</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="price">Max Price(65000)</label>
+        <input type="number" id="price" placeholder="0">
+      </div>
+
+      <div class="filter-group">
+        <label for="mileage">Max Mileage(150000)</label>
+        <input type="number" id="mileage" placeholder="0">
+      </div>
+
+      <div class="filter-group">
+        <button class="search-btn" onclick="filterTrucks()">Search Trucks</button>
+      </div>
+    </div>
+
+    <div class="truck-grid" id="truckGrid"></div>
+  </div>
+
+  <script>
+    const trucks = [
+      { id: 1, name: "Ford F-150 Lightning", year: 2024, brand: "ford", price: 45000, mileage: 90000, type: "Diesel", condition: "Excellent", status: "available" },
+      { id: 2, name: "Chevrolet Silverado 1500", year: 2023, brand: "chevrolet", price: 48000, mileage: 120000, type: "Gas", condition: "New", status: "available" },
+      { id: 3, name: "RAM 2500 HD", year: 2024, brand: "ram", price: 42000, mileage: 70000, type: "Diesel", condition: "Excellent", status: "available" },
+      { id: 4, name: "GMC Sierra 1500 Denali", year: 2023, brand: "gmc", price: 48000, mileage: 80000, type: "Diesel", condition: "Excellent", status: "available" },
+      { id: 5, name: "Toyota Tundra TRD Pro", year: 2024, brand: "toyota", price: 38000, mileage: 90000, type: "Hybrid", condition: "Excellent", status: "available" },
+      { id: 6, name: "Ford F-250 Super Duty", year: 2022, brand: "ford", price: 52000, mileage: 120000, type: "Diesel", condition: "Good", status: "sold" },
+      { id: 7, name: "Chevrolet Colorado ZR2", year: 2023, brand: "chevrolet", price: 42000, mileage: 110000, type: "Diesel", condition: "Very Good", status: "available" },
+      { id: 8, name: "RAM 1500 TRX", year: 2024, brand: "ram", price: 45000, mileage: 12000, type: "Gas", condition: "Excel''lent", status: "available" },
+      { id: 9, name: "Ford F-250 Highboy", year: 1972, brand: "ford", price: 14000, mileage: 70000, type: "Diesel", condition: "Super neat", status: "available" }
+    ];
+
+    function displayTrucks(trucksToShow) {
+      const grid = document.getElementById('truckGrid');
+      grid.innerHTML = '';
+
+      trucksToShow.forEach(truck => {
+        const card = document.createElement('div');
+        card.className = 'truck-card';
+        card.innerHTML = `
+          <div class="truck-image">🚛</div>
+          <div class="truck-info">
+            <span class="status-badge status-${truck.status}">${truck.status.toUpperCase()}</span>
+            <div class="truck-name">${truck.name}</div>
+            <div class="truck-details">${truck.year} • ${truck.mileage.toLocaleString()} miles</div>
+            <div class="truck-specs">
+              <span class="spec-badge">⛽ ${truck.type}</span>
+              <span class="spec-badge">✨ ${truck.condition}</span>
+            </div>
+            <div class="truck-price">$${truck.price.toLocaleString()}</div>
+            <button class="contact-btn" onclick="contactSeller(${truck.id})">Contact Seller</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterTrucks() {
+      const brand = document.getElementById('brand').value.toLowerCase();
+      const year = document.getElementById('year').value;
+      const maxPrice = document.getElementById('price').value;
+      const maxMileage = document.getElementById('mileage').value;
+
+      const filtered = trucks.filter(truck => {
+        if (brand && truck.brand !== brand) return false;
+        if (year && truck.year.toString() !== year) return false;
+        if (maxPrice && truck.price > parseInt(maxPrice)) return false;
+        if (maxMileage && truck.mileage > parseInt(maxMileage)) return false;
+        return true;
+      });
+
+      displayTrucks(filtered);
+    }
+
+    function contactSeller(id) {
+      const truck = trucks.find(t => t.id === id);
+      alert(`Thank you for your interest in the ${truck.name}!\n\nSend your request to: trucksontrucks7@gmail.com\n\nPrice: $${truck.price.toLocaleString()}`);
+    }
+
+    displayTrucks(trucks);
+  </script>
+</body>
+</html>
